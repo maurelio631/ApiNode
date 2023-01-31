@@ -18,6 +18,7 @@ app.set("port", PORT);
 app.use("/", route);
 
 server.listen(PORT);
+server.on("error", onError);
 
 console.log(`Servidor rodando e ouvindo à porta ${PORT}`);
 
@@ -32,4 +33,25 @@ function normalizePort(val) {
     return port;
   }
   return false;
+}
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  const bind = typeof port === "string" ? "Pipe" + PORT : "Port" + PORT;
+
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + "requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADORINUSE":
+      console.error(bind + "is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
 }
