@@ -1,27 +1,19 @@
 "use strict";
 
-const http = require("http");
+const app = require("../src/app");
 const debug = require("debug")("ApiNode:server");
-const express = require("express");
-const app = express();
-const PORT = normalizePort(process.env.PORT || "3000");
-const server = http.createServer(app);
-const router = express.Router();
-const route = router.get("/", (req, res, next) => {
-  res.status(200).send({
-    title: "API Node",
-    version: "0.0.1",
-  });
-});
+const http = require("http");
 
+const PORT = normalizePort(process.env.PORT || "3000");
 app.set("port", PORT);
-app.use("/", route);
+
+const server = http.createServer(app);
 
 server.listen(PORT);
 server.on("error", onError);
 server.on("listening", onListening);
-
 console.log(`Servidor rodando e ouvindo à porta ${PORT}`);
+
 
 function normalizePort(val) {
   const port = parseInt(val);
