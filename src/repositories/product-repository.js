@@ -13,7 +13,7 @@ exports.getBySlug = (slug) => {
   );
 };
 
-exports.getByid = (id) => {
+exports.getById = (id) => {
   return Product.findById(id);
 };
 
@@ -24,4 +24,21 @@ exports.getByTag = (tag) => {
   );
 };
 
-exports.create 
+exports.create = (data) => {
+  var product = new Product(data);
+  return product.save();
+};
+
+exports.update = (id, data) => {
+  return Product.findByIdAndUpdate(id, {
+    $set: {
+      title: data.title,
+      description: data.description,
+      price: data.price,
+    },
+  });
+};
+
+exports.delete = (id) => {
+  return Product.findOneAndRemove(id);
+};
