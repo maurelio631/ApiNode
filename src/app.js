@@ -2,9 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const router = express.Router();
+const config = require('./config');
+
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://marco:mongoDev@localhost:27017/?authSource=admin");
+mongoose.connect(config.connectionString);
 const Product = require("./models/product");
 const Customer = require("./models/customer");
 const Order = require("./models/order");
