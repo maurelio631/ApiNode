@@ -59,10 +59,11 @@ exports.authenticate = async (req, res, next) => {
       res.status(404).send({
         message: "Usuário ou senha inválidos",
       });
-      return
+      return;
     }
 
     const token = await authService.generateToken({
+      id: customer._id,
       email: customer.email,
       name: customer.name,
     });
