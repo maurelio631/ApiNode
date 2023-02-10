@@ -40,6 +40,7 @@ exports.post = async (req, res, next) => {
       name: req.body.name,
       email: req.body.email,
       password: md5(req.body.password + global.SALT_KEY),
+      roles: ["user"],
     });
     res.status(201).send({ message: "Cliente cadastrado com sucesso!" });
   } catch (e) {
@@ -66,6 +67,7 @@ exports.authenticate = async (req, res, next) => {
       id: customer._id,
       email: customer.email,
       name: customer.name,
+      roles: customer.roles,
     });
 
     res.status(201).send({
@@ -90,8 +92,6 @@ exports.refreshToken = async (req, res, next) => {
 
     const customer = await repository.getById(data.id);
 
-
-
     if (!customer) {
       res.status(404).send({
         message: "Usuário não encontrado",
@@ -103,6 +103,7 @@ exports.refreshToken = async (req, res, next) => {
       id: customer._id,
       email: customer.email,
       name: customer.name,
+      roles: customer.roles,
     });
 
     res.status(201).send({
@@ -111,7 +112,7 @@ exports.refreshToken = async (req, res, next) => {
         email: customer.email,
         name: customer.name,
       },
-    }); 
+    });
   } catch (e) {
     res.status(500).send({
       message: "Falha ao gerar o novo token",

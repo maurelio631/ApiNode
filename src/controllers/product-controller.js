@@ -75,28 +75,30 @@ exports.post = async (req, res, next) => {
   }
 
   try {
-    const blobService = azure.createBlobService(
-      config.userImagesBlobConnectionString
-    );
-    let fileName = guid.raw().toString() + ".jpg";
-    let rawData = req.body.image;
-    let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    let type = matches[1];
-    let buffer = new Buffer(matches[2], "base64");
+    // const blobService = azure.createBlobService(
+    //   config.userImagesBlobConnectionString
+    // );
+    // let fileName = guid.raw().toString() + ".jpg";
+    // let rawData = req.body.image;
+    // let matches = rawData.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    // let type = matches[1];
+    // let buffer = new Buffer(matches[2], "base64");
 
-    await blobService.createBlockBlobFromText(
-      "product-images",
-      fileName,
-      buffer,
-      {
-        contentType: type,
-      },
-      function (error, result, response) {
-        if (error) {
-          filename = "default-product.png";
-        }
-      }
-    );
+    // await blobService.createBlockBlobFromText(
+    //   "product-images",
+    //   fileName,
+    //   buffer,
+    //   {
+    //     contentType: type,
+    //   },
+    //   function (error, result, response) {
+    //     if (error) {
+    //       filename = "default-product.png";
+    //     }
+    //   }
+    // );
+
+    
 
     await repository.create({
       title: req.body.title,
